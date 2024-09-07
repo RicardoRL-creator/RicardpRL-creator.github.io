@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Modelo IA</title>
+</head>
+<body>
+    <h1>Teste de Modelo IA</h1>
+    <form id="prediction-form">
+        <label for="input-data">Dados de Entrada:</label>
+        <input type="text" id="input-data" name="input-data" required>
+        <button type="submit">Enviar</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const inputData = document.getElementById('input-data').value;
+            const response = await fetch('https://us-central1-aiplatform.googleapis.com/ui/projects/228107409831/locations/us-central1/endpoints/9012126166345056256:predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ya29.a0AcM612zavQ7g0S1bnVrvVxOPt2VH7H3CJ1X69OXodot5Af9wezq98DHIRsfEtZiCLmpSfikzj06wT5xlAbnsda6fc-NlrWY6eCpXmqzvwhQ3VAC_kwy0wjTItH9KcCKQkR-bdPB5InsFqo0yowc5ZpisZ4-30U0v1kZaAXEuWflAKv1V9sqIV5tnY3N1HImuUpHhjHKQml5R-tFT3uyPJ0Xzww6sIIDkAXH7emdkvZgz0e608MTUMpFroxxHC5V8wALc_RilSsgfCHQ32YTBvWsQQMx5G3lK3ulu0qOUZnsHZ5nKUxmxo01uorq2rh4UwvsXmioDl5pMpNXkYZFFDjCh7bVSbJ8a83m6OEm3oNQEfN5eau8nCMGEO7s4nxE_JV7ACcZXOZsUAxpJCIU3mAXSQykKFCSGjWdqaCgYKASESARMSFQHGX2MiKAfB3ktmAZ7jbmM6DuA8YA0427'
+                },
+                body: JSON.stringify({ instances: [{ mimeType: "text/plain", content: inputData }] })
+            });
+            const result = await response.json();
+            document.getElementById('result').innerText = JSON.stringify(result);
+        });
+    </script>
+</body>
+</html>
